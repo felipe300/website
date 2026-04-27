@@ -1,0 +1,27 @@
+{
+  "projects": [
+    {
+      "name": "ansible-lab",
+      "description": "Ansible + Docker + LocalStack Laboratory",
+      "url": "https://github.com/felipe300/ansible-lab"
+    },
+    {
+      "name": "bun_spa",
+      "description": "SPA with Bun",
+      "url": "https://github.com/felipe300/bun_spa"
+    },
+    {
+      "name": "n8n + Ollama + GPT-OSS",
+      "description": "Local AI Automation Stack",
+      "url": "https://github.com/felipe300/n8n_ollama"
+    }
+  ],
+  "skills": [
+    { "name": "Ansible" },
+    { "name": "AWS" },
+    { "name": "Docker" },
+    { "name": "LocalStack" },
+    { "name": "Terraform" },
+    { "name": "Minikube (Kubernetes)" }
+  ]
+}
