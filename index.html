@@ -1,61 +1,101 @@
 <!doctype html>
+
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Felipe Gutierrez</title>
-    <link rel="stylesheet" href="/assets/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Felipe Gutierrez | DevOps Engineer</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
   </head>
+
   <body>
     <main>
-      <h1>Felipe Gutierrez</h1>
-      <p>DevOps Engineer</p>
+      <header>
+        <h1>Felipe Gutierrez</h1>
+        <p><strong>DevOps Engineer</strong></p>
+        <p>
+          Especializado en automatización, infraestructura como código y entornos cloud. Construyo
+          plataformas reproducibles y pipelines CI/CD orientados a producción.
+        </p>
+      </header>
 
       <section>
-        <h2>Proyectos</h2>
-        <ul>
-          <li>
-            <a href="https://github.com/felipe300/ansible-lab"
-              >→ Ansible + Docker + LocalStack Laboratory</a
-            >
-          </li>
-          <li>
-            <a href="https://github.com/felipe300/n8n_ollama"
-              >→ Local AI Automation Stack (n8n + Ollama + GPT-OSS)</a
-            >
-          </li>
-          <li>
-            <a href="https://github.com/felipe300/ansible-lab"
-              >→ Bun Single Page Application (GitHub Actions)
+        <h2>Proyectos Destacados</h2>
+
+        <article>
+          <h3>
+            <a href="https://github.com/felipe300/ansible-lab">
+              Ansible + Docker + LocalStack Lab
             </a>
-          </li>
+          </h3>
+          <p>
+            Laboratorio para simular servicios AWS en local y validar infraestructura sin depender
+            de la nube.
+          </p>
+          <ul>
+            <li>Provisionamiento automatizado con Ansible</li>
+            <li>Simulación de AWS con LocalStack</li>
+            <li>Entornos reproducibles con Docker</li>
+          </ul>
+          <p><strong>Stack:</strong> Ansible, Docker, LocalStack, Bash</p>
+        </article>
+
+        <article>
+          <h3>
+            <a href="https://github.com/felipe300/n8n_ollama"> Local AI Automation Stack </a>
+          </h3>
+          <p>
+            Plataforma de automatización con IA ejecutándose completamente en local, sin dependencia
+            de APIs externas.
+          </p>
+          <ul>
+            <li>Workflows automatizados con n8n</li>
+            <li>Integración de modelos LLM con Ollama</li>
+            <li>Arquitectura desacoplada y extensible</li>
+          </ul>
+          <p><strong>Stack:</strong> Docker, n8n, Ollama</p>
+        </article>
+
+        <article>
+          <h3>
+            <a href="https://github.com/felipe300/bun_spa"> SPA + CI/CD con GitHub Actions </a>
+          </h3>
+          <p>Aplicación frontend con pipeline automatizado de build y despliegue.</p>
+          <ul>
+            <li>Pipeline CI/CD con GitHub Actions</li>
+            <li>Build automatizado y validación</li>
+            <li>Deploy continuo</li>
+          </ul>
+          <p><strong>Stack:</strong> Bun, TypeScript, GitHub Actions</p>
+        </article>
+      </section>
+
+      <section>
+        <h2>En qué aporto valor</h2>
+        <ul>
+          <li>Automatización de infraestructura (IaC)</li>
+          <li>Creación de entornos reproducibles</li>
+          <li>Diseño de pipelines CI/CD</li>
+          <li>Simulación de cloud en entornos locales</li>
         </ul>
       </section>
 
       <section>
-        <h2>Lenguages</h2>
+        <h2>Tecnologías</h2>
         <ul>
-          <li>Javascript</li>
-          <li>Typescript</li>
-          <li>Lua</li>
-          <li>Bash</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Skills</h2>
-        <ul>
-          <li>Ansible</li>
-          <li>AWS</li>
-          <li>Docker</li>
-          <li>LocalStack</li>
-          <li>Minikube (Kubernetes)</li>
-          <li>Terraform</li>
+          <li><strong>Cloud:</strong> AWS</li>
+          <li><strong>IaC:</strong> Terraform, Ansible</li>
+          <li><strong>Contenedores:</strong> Docker, Kubernetes (Minikube)</li>
+          <li><strong>Lenguajes:</strong> JavaScript, TypeScript, Bash, Lua</li>
         </ul>
       </section>
 
       <section>
         <h2>Contacto</h2>
-        <p>GitHub: felipe300</p>
+        <p>
+          GitHub:
+          <a href="https://github.com/felipe300"> github.com/felipe300 </a>
+        </p>
       </section>
     </main>
   </body>
