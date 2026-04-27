@@ -11,6 +11,30 @@ const server = Bun.serve({
     const isCurl = userAgent.includes("curl");
     const wantsHTML = accept.includes("text/html");
 
+    const now = () => new Date().toISOString().replace("T", " ").split(".")[0];
+
+    const log = (msg: any) => `[${now()}] INFO ${msg}`;
+
+    const formatProjects = (projects: any) =>
+      projects
+        .map(
+          (p: any) => `
+▶ ${p.name}
+${p.description}
+→ ${p.url}`,
+        )
+        .join("\n");
+
+    const formatSkills = (skills: any) => skills.map((s: any) => `• ${s.name}`).join("\n");
+
+    const textResponse = (body: any) =>
+      new Response(body, {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "no-store",
+        },
+      });
+
     if (pathname.startsWith("/assets/")) {
       const file = Bun.file(`.${pathname}`);
 
@@ -19,7 +43,8 @@ const server = Bun.serve({
       }
 
       const type = pathname.split(".").pop();
-      const contentTypes: Record<string, string> = {
+
+      const contentTypes = {
         css: "text/css",
         js: "application/javascript",
         png: "image/png",
@@ -27,70 +52,97 @@ const server = Bun.serve({
         jpeg: "image/jpeg",
         svg: "image/svg+xml",
         ico: "image/x-icon",
+        json: "application/json",
       };
 
       return new Response(file, {
         headers: {
           "Content-Type": contentTypes[type || ""] || "application/octet-stream",
+          "Cache-Control": "public, max-age=31536000",
         },
       });
     }
 
     if (isCurl || !wantsHTML) {
-      if (pathname === "/api/projects") {
-        const data = await Bun.file("./assets/data.json").json();
-        const projects = data.projects || [];
-        const output = projects
-          .map(
-            (p: any) => `
-            - ${p.name} 
-                ${p.description}
-                ${p.url}`,
-          )
-          .join("\n\n");
-        return new Response(
-          `
-felipe@dev:~$ ls projects
-${output}
-`,
-          {
-            headers: { "Content-Type": "text/plain" },
-          },
-        );
-      }
+      // ROOT
+      if (pathname === "/") {
+        return textResponse(`
 
-      if (pathname === "/api/skills") {
-        const data = await Bun.file("./assets/data.json").json();
-        const projects = data.skills || [];
-        const output = projects.map((s: any) => `- ${s.name}`).join("\n\n");
+╔══════════════════════════════════╗
+    Felipe Gutierrez | DevOps
+╚══════════════════════════════════╝
 
-        return new Response(
-          `felipe@dev:~$ cat skills
-          ${output}`,
-          {
-            headers: { "Content-Type": "text/plain" },
-          },
-        );
-      }
+${log("Terminal interface ready")}
 
-      return new Response(
-        `
-╔══════════════════════════╗
-   Felipe Gutierrez
-   DevOps Engineer
-╚══════════════════════════╝
+Available commands:
 
-Commands:
-- /api/projects
-- /api/skills
+curl /projects   → List projects
+curl /skills     → List skills
+curl /whoami     → About me
+curl /help       → Show help
 
 Example:
 curl http://localhost:3000/projects
-`,
-        {
-          headers: { "Content-Type": "text/plain" },
-        },
-      );
+`);
+      }
+
+      if (pathname === "/projects") {
+        const data = await Bun.file("./assets/data.json").json();
+        const projects = data.projects || [];
+
+        return textResponse(`
+felipe@dev:~$ curl /projects
+${log("Fetching projects...")}
+${formatProjects(projects)}
+`);
+      }
+
+      if (pathname === "/skills") {
+        const data = await Bun.file("./assets/data.json").json();
+        const skills = data.skills || [];
+
+        return textResponse(`
+felipe@dev:~$ cat skills
+${log("Loading skills...")}
+${formatSkills(skills)}
+`);
+      }
+
+      if (pathname === "/whoami") {
+        return textResponse(`
+felipe@dev:~$ whoami
+
+Felipe Gutierrez
+DevOps Engineer
+
+* Infraestructura como código
+* Automatización
+* CI/CD
+* Cloud (AWS)
+
+${log("Profile loaded")}
+`);
+      }
+
+      if (pathname === "/help") {
+        return textResponse(`
+felipe@dev:~$ help
+
+Commands:
+
+/projects   → Lista de proyectos
+/skills     → Tecnologías
+/whoami     → Perfil profesional
+/help       → Esta ayuda
+`);
+      }
+
+      return textResponse(`
+Command not found: ${pathname}
+
+Try:
+curl /help
+`);
     }
 
     const indexFile = Bun.file("./index.html");
@@ -100,7 +152,9 @@ curl http://localhost:3000/projects
     }
 
     return new Response(indexFile, {
-      headers: { "Content-Type": "text/html" },
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+      },
     });
   },
 });
