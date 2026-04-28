@@ -45,16 +45,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build static files
-        run: bun run build
-
       - name: Generate build info
         run: |
           echo '{
             "lastDeployment": "'$(date -u +"%Y-%m-%d %H:%M UTC")'",
             "commit": "'${{ github.sha }}'",
             "status": "passing"
-          }' > dist/assets/build-info.json
+          }' > assets/build-info.json
+
+      - name: Build static files
+        run: bun run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
