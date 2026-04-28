@@ -3,10 +3,10 @@
   "type": "module",
   "module": "index.ts",
   "scripts": {
-    "dev": "bun run server.js",
+    "dev": "clear && bun --watch server.ts",
     "build": "mkdir -p dist && cp -r index.html assets dist/",
     "check": "echo basic validation passed",
-    "html": "htmlhint index.html",
+    "html:check": "htmlhint index.html",
     "lint": "oxlint .",
     "ci": "bun run lint && bun run html && bun run build"
   },

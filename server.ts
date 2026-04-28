@@ -146,14 +146,39 @@ curl /help
     }
 
     const indexFile = Bun.file("./index.html");
+    const buildInfoFile = Bun.file("./assets/build-info.json");
 
     if (!(await indexFile.exists())) {
       return new Response("index.html not found", { status: 500 });
     }
 
-    return new Response(indexFile, {
+    const rawHtml = await indexFile.text();
+
+    const lastLogin = new Date().toLocaleString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+
+    let deploymentInfo = `${lastLogin} from recruiter.dev`;
+
+    if (await buildInfoFile.exists()) {
+      const buildInfo = await buildInfoFile.json();
+
+      if (buildInfo?.lastDeployment) {
+        deploymentInfo = buildInfo.lastDeployment;
+      }
+    }
+
+    const html = rawHtml.replace("{{LAST_LOGIN}}", deploymentInfo);
+
+    return new Response(html, {
       headers: {
         "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store",
       },
     });
   },
