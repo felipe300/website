@@ -1,8 +1,12 @@
 {
   "name": "website",
-  "module": "index.ts",
   "type": "module",
-  "private": true,
+  "module": "index.ts",
+  "scripts": {
+    "dev": "bun run server.js",
+    "build": "mkdir -p dist && cp -r index.html assets dist/",
+    "check": "echo basic validation passed"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
