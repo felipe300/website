@@ -6,11 +6,13 @@
     "dev": "bun run server.js",
     "build": "mkdir -p dist && cp -r index.html assets dist/",
     "check": "echo basic validation passed",
+    "html": "htmlhint index.html",
     "lint": "oxlint .",
-    "ci": "bun run lint && bun run check && bun run build"
+    "ci": "bun run lint && bun run html && bun run build"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "htmlhint": "^1.9.2",
     "oxlint": "^1.62.0"
   },
   "peerDependencies": {

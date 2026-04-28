@@ -24,8 +24,22 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Run CI checks
-        run: bun run ci
+      - name: Run Oxlint
+        run: bun run lint
+
+      - name: Validate HTML
+        run: bun run html:check
+
+      - name: Check broken links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >
+            --verbose
+            --no-progress
+            --accept 200,429
+            "./**/*.html"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build static files
         run: bun run build

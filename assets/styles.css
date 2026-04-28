@@ -1,18 +1,28 @@
 body {
-  background-color: black;
+  background: #0d1117;
   color: #00ff9f;
-  font-family: monospace;
+  font-family: "Fira Code", "JetBrains Mono", monospace;
+  margin: 0;
   padding: 2rem;
+  line-height: 1.7;
 }
 
-body::before {
-  content: "felipe@dev:~$";
-  display: block;
-  margin-bottom: 1rem;
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  border: 1px solid #00ff9f;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(0, 255, 159, 0.08);
+}
+
+.prompt {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 h1 {
   font-size: 2.5rem;
+  margin-bottom: 0.5rem;
 }
 
 h1::after {
@@ -20,13 +30,39 @@ h1::after {
   animation: blink 1s infinite;
 }
 
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
+section {
+  margin-top: 3rem;
+}
+
+article {
+  border-left: 2px solid #00ff9f;
+  padding-left: 1rem;
+  margin-top: 1.5rem;
 }
 
 a {
   color: #00ff9f;
   text-decoration: none;
+}
+
+a::before {
+  content: "→ ";
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
