@@ -28,7 +28,7 @@ jobs:
         run: bun run lint
 
       - name: Validate HTML
-        run: bun run html:check
+        run: bun run html
 
       - name: Check broken links
         uses: lycheeverse/lychee-action@v2
