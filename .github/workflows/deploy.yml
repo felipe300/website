@@ -58,7 +58,8 @@ jobs:
 
       - name: Replace LAST_LOGIN placeholder
         run: |
-          sed -i "s|{{LAST_LOGIN}}|$(date -u +"%Y-%m-%d %H:%M UTC") from recruiter.dev|g" index.html
+          DEPLOY_DATE=$(date -u +"%a %b %d %H:%M UTC")
+          sed -i "s|{{LAST_LOGIN}}|$DEPLOY_DATE from github.actions|g" dist/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
