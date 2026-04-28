@@ -5,10 +5,13 @@
   "scripts": {
     "dev": "bun run server.js",
     "build": "mkdir -p dist && cp -r index.html assets dist/",
-    "check": "echo basic validation passed"
+    "check": "echo basic validation passed",
+    "lint": "oxlint .",
+    "ci": "bun run lint && bun run check && bun run build"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "oxlint": "^1.62.0"
   },
   "peerDependencies": {
     "typescript": "^5"
