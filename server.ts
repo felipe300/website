@@ -146,7 +146,7 @@ curl /help
     }
 
     const indexFile = Bun.file("./index.html");
-    const buildInfoFile = Bun.file("./assets/build-info.json");
+    // const buildInfoFile = Bun.file("./assets/build-info.json");
 
     if (!(await indexFile.exists())) {
       return new Response("index.html not found", { status: 500 });
@@ -165,13 +165,13 @@ curl /help
 
     let deploymentInfo = `${lastLogin} from recruiter.dev`;
 
-    if (await buildInfoFile.exists()) {
-      const buildInfo = await buildInfoFile.json();
-
-      if (buildInfo?.lastDeployment) {
-        deploymentInfo = buildInfo.lastDeployment;
-      }
-    }
+    // if (await buildInfoFile.exists()) {
+    //   const buildInfo = await buildInfoFile.json();
+    //
+    //   if (buildInfo?.lastDeployment) {
+    //     deploymentInfo = buildInfo.lastDeployment;
+    //   }
+    // }
 
     const html = rawHtml.replace("{{LAST_LOGIN}}", deploymentInfo);
 

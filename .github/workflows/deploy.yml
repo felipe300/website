@@ -56,6 +56,10 @@ jobs:
       - name: Build static files
         run: bun run build
 
+      - name: Replace LAST_LOGIN placeholder
+        run: |
+          sed -i "s|{{LAST_LOGIN}}|$(date -u +"%Y-%m-%d %H:%M UTC") from recruiter.dev|g" index.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
