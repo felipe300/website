@@ -2,7 +2,7 @@ const buildClient = async () => {
   const result = await Bun.build({
     entrypoints: ["./index.ts"],
     outdir: "./assets",
-    naming: "client.js",
+    naming: "index.js",
   });
 
   if (!result.success) {

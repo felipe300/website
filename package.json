@@ -4,11 +4,12 @@
   "module": "index.ts",
   "scripts": {
     "dev": "clear && bun --watch server.ts",
-    "build": "bun build ./index.ts --outdir ./assets --naming client.js",
+    "start": "bun run server.ts",
+    "build": "bun build ./client.ts --outdir ./assets --naming [name].js",
     "check": "echo basic validation passed",
     "html:check": "htmlhint index.html",
     "lint": "oxlint .",
-    "ci": "bun run lint && bun run html && bun run build"
+    "ci": "bun run lint && bun run html:check && bun run build"
   },
   "devDependencies": {
     "@types/bun": "latest",
