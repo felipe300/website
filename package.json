@@ -1,11 +1,10 @@
 {
   "name": "website",
   "type": "module",
-  "module": "index.ts",
   "scripts": {
     "dev": "clear && bun --watch server.ts",
     "start": "bun run server.ts",
-    "build": "bun build ./index.ts --outdir ./assets --naming [name].js",
+    "build": "bun build ./index.ts --outdir ./assets --entry-naming [name].js",
     "check": "echo basic validation passed",
     "html:check": "htmlhint index.html",
     "lint": "oxlint .",
