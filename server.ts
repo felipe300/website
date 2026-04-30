@@ -8,11 +8,22 @@ const buildClient = async () => {
   if (!result.success) {
     console.error("Build fallido:", result.logs);
   } else {
-    console.log("Assets listos.");
+    console.log("Assets listos (index.ts -> assets/client.js)");
   }
 };
 
 await buildClient();
+
+const CONTENT_TYPES: Record<string, string> = {
+  css: "text/css",
+  js: "application/javascript",
+  png: "image/png",
+  jpg: "image/jpeg",
+  jpeg: "image/jpeg",
+  svg: "image/svg+xml",
+  ico: "image/x-icon",
+  json: "application/json",
+};
 
 const server = Bun.serve({
   port: 3000,
@@ -45,28 +56,27 @@ const server = Bun.serve({
         return new Response("Not Found", { status: 404 });
       }
 
-      const type = pathname.split(".").pop() as keyof typeof contentTypes;
-
-      const contentTypes: Record<string, string> = {
-        css: "text/css",
-        js: "application/javascript",
-        png: "image/png",
-        jpg: "image/jpeg",
-        jpeg: "image/jpeg",
-        svg: "image/svg+xml",
-        ico: "image/x-icon",
-        json: "application/json",
-      };
+      const ext = pathname.split(".").pop() || "";
+      const contentType = CONTENT_TYPES[ext] || "application/octet-stream";
 
       return new Response(file, {
         headers: {
-          "Content-Type": contentTypes[type] || "application/octet-stream",
+          "Content-Type": contentType,
           "Cache-Control": "public, max-age=31536000",
         },
       });
     }
 
     if (isCurl || !wantsHTML) {
+      let data: any = { projects: [], skills: [] };
+      if (pathname === "/projects" || pathname === "/skills") {
+        try {
+          data = await Bun.file("./assets/data.json").json();
+        } catch (e) {
+          return textResponse(`${log("Error: data.json not found or invalid")}\n`);
+        }
+      }
+
       const formatProjects = (projects: any) =>
         projects.map((p: any) => `\n▶ ${p.name}\n${p.description}\n→ ${p.url}`).join("\n");
 
@@ -88,15 +98,15 @@ curl /help        → Show help
 `);
       }
 
-      if (pathname === "/projects" || pathname === "/skills") {
-        const data = await Bun.file("./assets/data.json").json();
-        if (pathname === "/projects") {
-          return textResponse(
-            `felipe@dev:~$ curl /projects\n${log("Fetching projects...")}\n${formatProjects(data.projects || [])}\n`,
-          );
-        }
+      if (pathname === "/projects") {
         return textResponse(
-          `felipe@dev:~$ cat skills\n${log("Loading skills...")}\n${formatSkills(data.skills || [])}\n`,
+          `felipe@dev:~$ curl /projects\n${log("Fetching projects...")}\n${formatProjects(data.projects)}\n`,
+        );
+      }
+
+      if (pathname === "/skills") {
+        return textResponse(
+          `felipe@dev:~$ cat skills\n${log("Loading skills...")}\n${formatSkills(data.skills)}\n`,
         );
       }
 
