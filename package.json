@@ -4,7 +4,7 @@
   "module": "index.ts",
   "scripts": {
     "dev": "clear && bun --watch server.ts",
-    "build": "mkdir -p dist && cp -r index.html assets dist/",
+    "build": "bun build ./index.ts --outdir ./assets --naming client.js",
     "check": "echo basic validation passed",
     "html:check": "htmlhint index.html",
     "lint": "oxlint .",

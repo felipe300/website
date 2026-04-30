@@ -1,3 +1,19 @@
+const buildClient = async () => {
+  const result = await Bun.build({
+    entrypoints: ["./index.ts"],
+    outdir: "./assets",
+    naming: "client.js",
+  });
+
+  if (!result.success) {
+    console.error("Build fallido:", result.logs);
+  } else {
+    console.log("Assets listos.");
+  }
+};
+
+await buildClient();
+
 const server = Bun.serve({
   port: 3000,
 
@@ -12,20 +28,7 @@ const server = Bun.serve({
     const wantsHTML = accept.includes("text/html");
 
     const now = () => new Date().toISOString().replace("T", " ").split(".")[0];
-
     const log = (msg: any) => `[${now()}] INFO ${msg}`;
-
-    const formatProjects = (projects: any) =>
-      projects
-        .map(
-          (p: any) => `
-▶ ${p.name}
-${p.description}
-→ ${p.url}`,
-        )
-        .join("\n");
-
-    const formatSkills = (skills: any) => skills.map((s: any) => `• ${s.name}`).join("\n");
 
     const textResponse = (body: any) =>
       new Response(body, {
@@ -42,9 +45,9 @@ ${p.description}
         return new Response("Not Found", { status: 404 });
       }
 
-      const type = pathname.split(".").pop();
+      const type = pathname.split(".").pop() as keyof typeof contentTypes;
 
-      const contentTypes = {
+      const contentTypes: Record<string, string> = {
         css: "text/css",
         js: "application/javascript",
         png: "image/png",
@@ -57,17 +60,20 @@ ${p.description}
 
       return new Response(file, {
         headers: {
-          "Content-Type": contentTypes[type || ""] || "application/octet-stream",
+          "Content-Type": contentTypes[type] || "application/octet-stream",
           "Cache-Control": "public, max-age=31536000",
         },
       });
     }
 
     if (isCurl || !wantsHTML) {
-      // ROOT
+      const formatProjects = (projects: any) =>
+        projects.map((p: any) => `\n▶ ${p.name}\n${p.description}\n→ ${p.url}`).join("\n");
+
+      const formatSkills = (skills: any) => skills.map((s: any) => `• ${s.name}`).join("\n");
+
       if (pathname === "/") {
         return textResponse(`
-
 ╔══════════════════════════════════╗
     Felipe Gutierrez | DevOps
 ╚══════════════════════════════════╝
@@ -75,85 +81,47 @@ ${p.description}
 ${log("Terminal interface ready")}
 
 Available commands:
-
-curl /projects   → List projects
-curl /skills     → List skills
-curl /whoami     → About me
-curl /help       → Show help
-
-Example:
-curl http://localhost:3000/projects
+curl /projects    → List projects
+curl /skills      → List skills
+curl /whoami      → About me
+curl /help        → Show help
 `);
       }
 
-      if (pathname === "/projects") {
+      if (pathname === "/projects" || pathname === "/skills") {
         const data = await Bun.file("./assets/data.json").json();
-        const projects = data.projects || [];
-
-        return textResponse(`
-felipe@dev:~$ curl /projects
-${log("Fetching projects...")}
-${formatProjects(projects)}
-`);
-      }
-
-      if (pathname === "/skills") {
-        const data = await Bun.file("./assets/data.json").json();
-        const skills = data.skills || [];
-
-        return textResponse(`
-felipe@dev:~$ cat skills
-${log("Loading skills...")}
-${formatSkills(skills)}
-`);
+        if (pathname === "/projects") {
+          return textResponse(
+            `felipe@dev:~$ curl /projects\n${log("Fetching projects...")}\n${formatProjects(data.projects || [])}\n`,
+          );
+        }
+        return textResponse(
+          `felipe@dev:~$ cat skills\n${log("Loading skills...")}\n${formatSkills(data.skills || [])}\n`,
+        );
       }
 
       if (pathname === "/whoami") {
-        return textResponse(`
-felipe@dev:~$ whoami
-
-Felipe Gutierrez
-DevOps Engineer
-
-* Infraestructura como código
-* Automatización
-* CI/CD
-* Cloud (AWS)
-
-${log("Profile loaded")}
-`);
+        return textResponse(
+          `felipe@dev:~$ whoami\n\nFelipe Gutierrez\nDevOps Engineer\n\n* Infraestructura como código\n* Automatización\n* CI/CD\n* Cloud (AWS)\n\n${log("Profile loaded")}\n`,
+        );
       }
 
       if (pathname === "/help") {
-        return textResponse(`
-felipe@dev:~$ help
-
-Commands:
-
-/projects   → Lista de proyectos
-/skills     → Tecnologías
-/whoami     → Perfil profesional
-/help       → Esta ayuda
-`);
+        return textResponse(
+          `felipe@dev:~$ help\n\n/projects  → Lista de proyectos\n/skills    → Tecnologías\n/whoami    → Perfil profesional\n/help      → Esta ayuda\n`,
+        );
       }
 
-      return textResponse(`
-Command not found: ${pathname}
-
-Try:
-curl /help
-`);
+      return textResponse(`Command not found: ${pathname}\nTry: curl /help\n`);
     }
 
     const indexFile = Bun.file("./index.html");
-    // const buildInfoFile = Bun.file("./assets/build-info.json");
 
     if (!(await indexFile.exists())) {
       return new Response("index.html not found", { status: 500 });
     }
 
     const rawHtml = await indexFile.text();
-
     const lastLogin = new Date().toLocaleString("en-US", {
       weekday: "short",
       month: "short",
@@ -163,17 +131,7 @@ curl /help
       hour12: false,
     });
 
-    let deploymentInfo = `${lastLogin} from recruiter.dev`;
-
-    // if (await buildInfoFile.exists()) {
-    //   const buildInfo = await buildInfoFile.json();
-    //
-    //   if (buildInfo?.lastDeployment) {
-    //     deploymentInfo = buildInfo.lastDeployment;
-    //   }
-    // }
-
-    const html = rawHtml.replace("{{LAST_LOGIN}}", deploymentInfo);
+    const html = rawHtml.replace("{{LAST_LOGIN}}", `${lastLogin} from recruiter.dev`);
 
     return new Response(html, {
       headers: {
