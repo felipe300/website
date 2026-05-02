@@ -6,8 +6,8 @@
     <title>Felipe Gutiérrez | DevOps Engineer</title>
     <link rel="stylesheet" href="./assets/styles.css" />
   </head>
-
   <body>
+    <div id="hacker-layer" class="hacker-bg"></div>
     <main>
       <header>
         <p class="prompt">Last login: {{LAST_LOGIN}}</p>
@@ -19,11 +19,9 @@
           plataformas reproducibles y pipelines CI/CD orientados a producción.
         </p>
       </header>
-
       <section>
         <p class="prompt">felipe@dev:~$ cat projects.md</p>
         <h2>Proyectos Destacados</h2>
-
         <article>
           <h3>
             <a href="https://github.com/felipe300/ansible-lab">
@@ -36,12 +34,11 @@
           </p>
           <ul>
             <li>Provisionamiento automatizado con Ansible</li>
-            <li>Simulación de AWS con Ministack (Reemplazo de LocalStack)</li>
+            <li>Simulación de AWS con Ministack (reemplazo de LocalStack)</li>
             <li>Entornos reproducibles con Docker</li>
           </ul>
           <p><strong>Stack:</strong> Ansible, Docker, Ministack, LocalStack, Bash</p>
         </article>
-
         <article>
           <h3>
             <a href="https://github.com/felipe300/n8n_ollama"> Local AI Automation Stack </a>
@@ -57,7 +54,6 @@
           </ul>
           <p><strong>Stack:</strong> Docker, n8n, Ollama</p>
         </article>
-
         <article>
           <h3>
             <a href="https://github.com/felipe300/bun_spa"> SPA + CI/CD con GitHub Actions </a>
@@ -71,7 +67,6 @@
           <p><strong>Stack:</strong> Bun, TypeScript, GitHub Actions</p>
         </article>
       </section>
-
       <section>
         <p class="prompt">felipe@dev:~$ cat value.md</p>
         <h2>En qué aporto valor</h2>
@@ -82,7 +77,6 @@
           <li>Simulación de cloud en entornos locales</li>
         </ul>
       </section>
-
       <section>
         <p class="prompt">felipe@dev:~$ cat skills.json</p>
         <h2>Tecnologías</h2>
@@ -93,17 +87,25 @@
           <li><strong>Lenguajes:</strong> JavaScript, TypeScript, Bash, Lua</li>
         </ul>
       </section>
-
       <section>
         <p class="prompt">felipe@dev:~$ cat contact.txt</p>
         <h2>Contacto</h2>
         <p>
           Email:
-          <a href="mailto:gutierrezfelipepmt@gmail.com"> gutierrezfelipepmt@gmail.com </a>
+          <a class="link-effect" href="mailto:gutierrezfelipepmt@gmail.com">
+            gutierrezfelipepmt@gmail.com
+          </a>
         </p>
         <p>
           GitHub:
-          <a href="https://github.com/felipe300" target="_blank"> github.com/felipe300 </a>
+          <a
+            class="link-effect"
+            href="https://github.com/felipe300"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            github.com/felipe300
+          </a>
         </p>
       </section>
     </main>

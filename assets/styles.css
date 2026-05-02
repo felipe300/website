@@ -6,6 +6,8 @@
   --text-dim: #70a18e;
   --shadow-color: rgba(0, 255, 159, 0.15);
   --font-mono: "Fira Code", "JetBrains Mono", monospace;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
 }
 
 * {
@@ -21,6 +23,41 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.hacker-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  color: var(--main-color);
+  font-size: 10px;
+  line-height: 14px;
+  word-break: break-all;
+  opacity: 0.1;
+  pointer-events: none;
+  user-select: none;
+  white-space: normal;
+
+  display: grid;
+  flex-wrap: wrap;
+  align-content: flex-start;
+
+  -webkit-mask-image: radial-gradient(
+    500px circle at var(--mouse-x) var(--mouse-y),
+    black 20%,
+    transparent 80%
+  );
+  mask-image: radial-gradient(
+    500px circle at var(--mouse-x) var(--mouse-y),
+    black 20%,
+    transparent 80%
+  );
 }
 
 main {
@@ -29,8 +66,21 @@ main {
   border: 1px solid var(--main-color);
   padding: 2.5rem;
   position: relative;
+  z-index: 10; /* Asegura estar sobre el fondo */
   box-shadow: 0 0 25px var(--shadow-color);
-  background: rgba(13, 17, 23, 0.8);
+  background: rgba(13, 17, 23, 0.9);
+  backdrop-filter: blur(2px);
+}
+
+main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%);
+  background-size: 100% 4px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.4;
 }
 
 .prompt {
@@ -38,10 +88,6 @@ main {
   color: var(--text-dim);
   margin-bottom: 0.5rem;
   display: block;
-}
-
-.prompt::before {
-  content: "guest@devops:~$ ";
 }
 
 h1 {
@@ -66,11 +112,10 @@ h1.animating::after {
 }
 
 h2 {
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   border-bottom: 1px dashed var(--main-color);
   display: inline-block;
-  margin-bottom: 1.2rem;
-  margin-top: 1rem;
+  margin: 1rem 0 1.2rem;
 }
 
 article {
@@ -89,34 +134,41 @@ article:hover {
 a {
   color: var(--main-color);
   text-decoration: none;
-  position: relative;
   transition: all 0.2s ease;
   cursor: pointer;
-  display: inline-block;
-}
-
-a::before,
-a::after {
-  opacity: 0;
-  transition: all 0.2s ease;
-}
-
-a::before {
-  content: "[ ";
-  margin-right: 2px;
-}
-a::after {
-  content: " ]";
-  margin-left: 2px;
-}
-
-a:hover::before,
-a:hover::after {
-  opacity: 1;
 }
 
 a:hover {
   text-shadow: 0 0 10px var(--main-color);
+}
+
+.link-effect {
+  display: inline-block;
+  position: relative;
+}
+
+.link-effect::before,
+.link-effect::after {
+  opacity: 1;
+  transition: all 0.2s ease;
+}
+
+.link-effect::before {
+  content: "[ ";
+  margin-right: 2px;
+}
+
+.link-effect::after {
+  content: " ]";
+  margin-left: 2px;
+}
+
+.link-effect:hover::before,
+.link-effect:hover::after {
+  opacity: 1;
+}
+
+.link-effect:hover {
   transform: scale(1.02);
 }
 
@@ -127,15 +179,16 @@ ul {
 
 li {
   margin-bottom: 0.7rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  padding-left: 1.2rem;
+  position: relative;
 }
 
 li::before {
-  content: "  - ";
+  content: "▸";
   color: var(--text-dim);
-  margin-right: 8px;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 li strong {
@@ -149,18 +202,8 @@ li strong {
   }
 }
 
-main::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%);
-  background-size: 100% 4px;
-  z-index: 100;
-  pointer-events: none;
-  opacity: 0.4;
+section p {
+  margin: 0.2rem 0;
 }
 
 @media (max-width: 600px) {
