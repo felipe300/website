@@ -83,6 +83,35 @@ main::before {
   opacity: 0.4;
 }
 
+.lang-switcher {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.9rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.lang-switcher a {
+  text-transform: lowercase;
+  font-weight: bold;
+}
+
+.lang-switcher a.active {
+  background: var(--main-color);
+  color: var(--bg-color);
+  text-shadow: none;
+}
+
+@media (max-width: 600px) {
+  .lang-switcher {
+    position: static;
+    margin-bottom: 1.5rem;
+    justify-content: flex-end;
+  }
+}
+
 .prompt {
   font-weight: bold;
   color: var(--text-dim);

@@ -10,94 +10,125 @@
     <div id="hacker-layer" class="hacker-bg"></div>
     <main>
       <header>
-        <p class="prompt">Last login: {{LAST_LOGIN}}</p>
-        <p class="prompt">felipe@dev:~$ whoami</p>
-        <h1 data-value="FELIPE GUTIÉRREZ">Felipe Gutiérrez</h1>
-        <p><strong>DevOps Engineer</strong></p>
+        <nav class="lang-switcher">
+          <span class="prompt">lang:</span>
+          <a class="link-effect" id="btn-es">es</a>
+          <span class="text-dim">|</span>
+          <a class="link-effect" id="btn-en">en</a>
+        </nav>
+        <p class="prompt" data-i18n="last_login">Last login: {{LAST_LOGIN}}</p>
+        <p class="prompt" data-i18n="prompt_whoami">felipe@dev:~$ whoami</p>
+
+        <h1 data-value="FELIPE GUTIÉRREZ" data-i18n="name">Felipe Gutiérrez</h1>
         <p>
+          <strong data-i18n="role"> DevOps Engineer </strong>
+        </p>
+        <p data-i18n="intro">
           Especializado en automatización, infraestructura como código y entornos cloud. Construyo
           plataformas reproducibles y pipelines CI/CD orientados a producción.
         </p>
       </header>
+
       <section>
-        <p class="prompt">felipe@dev:~$ cat projects.md</p>
-        <h2>Proyectos Destacados</h2>
+        <p class="prompt" data-i18n="prompt_projects">felipe@dev:~$ cat projects.md</p>
+        <h2 data-i18n="title_projects">Proyectos Destacados</h2>
+
         <article>
           <h3>
-            <a href="https://github.com/felipe300/ansible-lab">
+            <a href="https://github.com/felipe300/ansible-lab" data-i18n="p1_title">
               Ansible + Docker + Ministack Lab
             </a>
           </h3>
-          <p>
+          <p data-i18n="p1_desc">
             Laboratorio para simular servicios AWS en local y validar infraestructura sin depender
             de la nube.
           </p>
           <ul>
-            <li>Provisionamiento automatizado con Ansible</li>
-            <li>Simulación de AWS con Ministack (reemplazo de LocalStack)</li>
-            <li>Entornos reproducibles con Docker</li>
+            <li data-i18n="p1_li1">Provisionamiento automatizado con Ansible</li>
+            <li data-i18n="p1_li2">Simulación de AWS con Ministack (reemplazo de LocalStack)</li>
+            <li data-i18n="p1_li3">Entornos reproducibles con Docker</li>
           </ul>
-          <p><strong>Stack:</strong> Ansible, Docker, Ministack, LocalStack, Bash</p>
+          <p>
+            <strong>Stack:</strong>
+            Ansible, Docker, Ministack, LocalStack, Bash
+          </p>
         </article>
+
         <article>
           <h3>
-            <a href="https://github.com/felipe300/n8n_ollama"> Local AI Automation Stack </a>
+            <a href="https://github.com/felipe300/n8n_ollama" data-i18n="p2_title">
+              Local AI Automation Stack
+            </a>
           </h3>
-          <p>
+          <p data-i18n="p2_desc">
             Plataforma de automatización con IA ejecutándose completamente en local, sin dependencia
             de APIs externas.
           </p>
           <ul>
-            <li>Workflows automatizados con n8n</li>
-            <li>Integración de modelos LLM con Ollama</li>
-            <li>Arquitectura desacoplada y extensible</li>
+            <li data-i18n="p2_li1">Workflows automatizados con n8n</li>
+            <li data-i18n="p2_li2">Integración de modelos LLM con Ollama</li>
+            <li data-i18n="p2_li3">Arquitectura desacoplada y extensible</li>
           </ul>
-          <p><strong>Stack:</strong> Docker, n8n, Ollama</p>
+          <p>
+            <strong>Stack:</strong>
+            Docker, n8n, Ollama
+          </p>
         </article>
+
         <article>
           <h3>
-            <a href="https://github.com/felipe300/bun_spa"> SPA + CI/CD con GitHub Actions </a>
+            <a href="https://github.com/felipe300/bun_spa" data-i18n="p3_title">
+              SPA + CI/CD con GitHub Actions
+            </a>
           </h3>
-          <p>Aplicación frontend con pipeline automatizado de build y despliegue.</p>
+          <p data-i18n="p3_desc">
+            Aplicación frontend con pipeline automatizado de build y despliegue.
+          </p>
           <ul>
-            <li>Pipeline CI/CD con GitHub Actions</li>
-            <li>Build automatizado y validación</li>
-            <li>Deploy continuo</li>
+            <li data-i18n="p3_li1">Pipeline CI/CD con GitHub Actions</li>
+            <li data-i18n="p3_li2">Build automatizado y validación</li>
+            <li data-i18n="p3_li3">Deploy continuo</li>
           </ul>
-          <p><strong>Stack:</strong> Bun, TypeScript, GitHub Actions</p>
+          <p>
+            <strong>Stack:</strong>
+            Bun, TypeScript, GitHub Actions
+          </p>
         </article>
       </section>
+
       <section>
-        <p class="prompt">felipe@dev:~$ cat value.md</p>
-        <h2>En qué aporto valor</h2>
+        <p class="prompt" data-i18n="prompt_value">felipe@dev:~$ cat value.md</p>
+        <h2 data-i18n="title_value">En qué aporto valor</h2>
         <ul>
-          <li>Automatización de infraestructura (IaC)</li>
-          <li>Creación de entornos reproducibles</li>
-          <li>Diseño de pipelines CI/CD</li>
-          <li>Simulación de cloud en entornos locales</li>
+          <li data-i18n="v_li1">Automatización de infraestructura (IaC)</li>
+          <li data-i18n="v_li2">Creación de entornos reproducibles</li>
+          <li data-i18n="v_li3">Diseño de pipelines CI/CD</li>
+          <li data-i18n="v_li4">Simulación de cloud en entornos locales</li>
         </ul>
       </section>
+
       <section>
-        <p class="prompt">felipe@dev:~$ cat skills.json</p>
-        <h2>Tecnologías</h2>
+        <p class="prompt" data-i18n="prompt_skills">felipe@dev:~$ cat skills.json</p>
+        <h2 data-i18n="title_skills">Tecnologías</h2>
         <ul>
-          <li><strong>Cloud:</strong> AWS</li>
-          <li><strong>IaC:</strong> Terraform, Ansible</li>
-          <li><strong>Contenedores:</strong> Docker, Kubernetes (Minikube)</li>
-          <li><strong>Lenguajes:</strong> JavaScript, TypeScript, Bash, Lua</li>
+          <li><strong data-i18n="t_li1">Cloud:</strong> AWS</li>
+          <li><strong data-i18n="t_li2">IaC:</strong> Terraform, Ansible</li>
+          <li><strong data-i18n="t_li3">Contenedores:</strong> Docker, Kubernetes (Minikube)</li>
+          <li><strong data-i18n="t_li4">Lenguajes:</strong> JavaScript, TypeScript, Bash, Lua</li>
         </ul>
       </section>
+
       <section>
-        <p class="prompt">felipe@dev:~$ cat contact.txt</p>
-        <h2>Contacto</h2>
+        <p class="prompt" data-i18n="prompt_contact">felipe@dev:~$ cat contact.txt</p>
+        <h2 data-i18n="title_contact">Contacto</h2>
         <p>
-          Email:
+          <span data-i18n="c_li1"> Email: </span>
           <a class="link-effect" href="mailto:gutierrezfelipepmt@gmail.com">
             gutierrezfelipepmt@gmail.com
           </a>
         </p>
         <p>
-          GitHub:
+          <span data-i18n="c_li2"> GitHub: </span>
           <a
             class="link-effect"
             href="https://github.com/felipe300"
@@ -109,6 +140,7 @@
         </p>
       </section>
     </main>
+
     <script src="assets/index.js" type="module" defer></script>
   </body>
 </html>

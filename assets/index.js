@@ -1,4 +1,7 @@
 // index.ts
+var translations = {
+  common: {}
+};
 var letters = "ABCDEÉFGHIJKLMNOPQRSTUVWXYZ";
 var chars = letters + "ABCDEF0123456789";
 var h1 = document.querySelector("h1");
@@ -14,7 +17,7 @@ h1.onmouseover = (event) => {
     target.innerText = target.innerText.split("").map((_, index) => {
       if (index < iterations)
         return originalValue[index];
-      return letters[Math.floor(Math.random() * 26)];
+      return letters[Math.floor(Math.random() * letters.length)];
     }).join("");
     if (iterations >= originalValue.length) {
       clearInterval(interval);
@@ -65,3 +68,44 @@ window.addEventListener("mousemove", (e) => {
 });
 setupClickToCopy('a[href^="mailto:"]', true);
 setupClickToCopy('a[href*="github.com"]');
+document.getElementById("btn-es")?.addEventListener("click", () => {
+  applyLanguage("es");
+});
+document.getElementById("btn-en")?.addEventListener("click", () => {
+  applyLanguage("en");
+});
+async function loadTranslations() {
+  try {
+    const response = await fetch("./assets/lang.json");
+    translations = await response.json();
+    const savedLang = localStorage.getItem("prefLang") || "es";
+    applyLanguage(savedLang);
+  } catch (error) {
+    console.error("Error cargando traducciones:", error);
+  }
+}
+function applyLanguage(lang) {
+  const elements = document.querySelectorAll("[data-i18n]");
+  const button = document.getElementById(`btn-${lang}`);
+  document.querySelectorAll(".lang-switcher a").forEach((a) => a.classList.remove("active"));
+  const mergedTranslations = {
+    ...translations.common,
+    ...translations[lang]
+  };
+  elements.forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    if (!key)
+      return;
+    const value = mergedTranslations[key];
+    if (value !== undefined) {
+      el.textContent = value;
+    } else {
+      console.warn(`Missing translation for key: ${key}`);
+    }
+  });
+  if (button) {
+    button.classList.add("active");
+  }
+  localStorage.setItem("prefLang", lang);
+}
+document.addEventListener("DOMContentLoaded", loadTranslations);
