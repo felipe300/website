@@ -5,10 +5,10 @@
     "dev": "clear && bun --watch server.ts",
     "start": "bun run server.ts",
     "build": "bun build ./index.ts --outdir ./dist/assets --entry-naming [name].js",
-    "gen:info": "node -e \"const fs=require('fs'); fs.mkdirSync('dist',{recursive:true}); fs.writeFileSync('dist/assets/build-info.json', JSON.stringify({ last-login: new Date().toUTCString(), commit: 'local-dev' }, null, 2));\"",
     "lint": "oxlint .",
+    "gen:info": "node -e \"const fs=require('fs'); fs.mkdirSync('dist/assets',{recursive:true}); fs.writeFileSync('dist/assets/build-info.json', JSON.stringify({ 'last-login': new Date().toUTCString(), commit: 'local-dev' }, null, 2));\"",
     "html:check": "htmlhint index.html",
-    "ci": "bun run lint && bun run html:check && bun run build && bun run gen:info"
+    "ci": "bun run lint && bun run html:check && bun run gen:info && bun run build"
   },
   "devDependencies": {
     "@types/bun": "latest",
