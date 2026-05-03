@@ -8,14 +8,14 @@ export async function loadBuildInfo() {
     const rawData = await res.json();
 
     data = {
-      "last-login": `${rawData["last-login"]} from github.actions`,
+      lastDeployment: `${rawData.lastDeployment} from github.actions`,
       commit: rawData.commit,
       status: rawData.status,
     };
   } catch {
     const now = new Date();
     data = {
-      "last-login": now.toLocaleString() + " (local dev)",
+      lastDeployment: now.toLocaleString() + " (local dev)",
       commit: "local-branch",
       status: "running",
     };

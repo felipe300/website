@@ -52,7 +52,7 @@ jobs:
         run: |
           mkdir -p assets
           echo '{
-            "last-deply": "'$(date -u +"%Y-%m-%d %H:%M UTC")'",
+            "lastDeployment": "'$(date -u +"%Y-%m-%d %H:%M UTC")'",
             "commit": "'${{ github.sha }}'",
             "status": "passing"
           }' > assets/build-info.json

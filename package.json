@@ -6,7 +6,7 @@
     "start": "bun run server.ts",
     "build": "bun build ./index.ts --outdir ./dist/assets --entry-naming [name].js",
     "lint": "oxlint .",
-    "gen:info": "node -e \"const fs=require('fs'); fs.mkdirSync('dist/assets',{recursive:true}); fs.writeFileSync('dist/assets/build-info.json', JSON.stringify({ 'last-login': new Date().toUTCString(), commit: 'local-dev' }, null, 2));\"",
+    "gen:info": "node -e \"const fs=require('fs'); fs.mkdirSync('dist/assets',{recursive:true}); fs.writeFileSync('dist/assets/build-info.json', JSON.stringify({ 'lastDeployment': new Date().toUTCString(), commit: 'local-dev' }, null, 2));\"",
     "html:check": "htmlhint index.html",
     "ci": "bun run lint && bun run html:check && bun run gen:info && bun run build"
   },
