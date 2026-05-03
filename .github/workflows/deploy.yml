@@ -47,29 +47,24 @@ jobs:
 
       - name: Generate build info
         run: |
+          mkdir -p dist/assets
           echo '{
             "lastDeployment": "'$(date -u +"%Y-%m-%d %H:%M UTC")'",
             "commit": "'${{ github.sha }}'",
             "status": "passing"
-          }' > assets/build-info.json
+          }' > dist/assets/build-info.json
 
       - name: Build static files
         run: bun run build
 
-      - name: Replace LAST_LOGIN placeholder
+      - name: Inject LAST_LOGIN
         run: |
           DEPLOY_DATE=$(date -u +"%a %b %d %H:%M UTC")
-          sed -i "s|{{LAST_LOGIN}}|$DEPLOY_DATE from github.actions|g" index.html
+
+          sed -i "s|<span id=\"last-login\"></span>|<span id=\"last-login\">$DEPLOY_DATE from github.actions</span>|g" dist/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
-
-      - name: Prepare deploy folder
-        run: |
-          mkdir dist
-          cp index.html dist/
-          cp -r assets dist/
-          cp public/lang.json dist/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

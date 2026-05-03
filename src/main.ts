@@ -2,6 +2,7 @@ import { initHackerEffect } from "./modules/hacker";
 import { initBackground } from "./modules/background";
 import { setupClickToCopy } from "./modules/clipboard";
 import { loadTranslations } from "./modules/i18n";
+import { loadBuildInfo } from "./modules/buildInfo";
 
 document.addEventListener("DOMContentLoaded", () => {
   initHackerEffect();
@@ -11,4 +12,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setupClickToCopy('a[href*="github.com"]');
 
   loadTranslations();
+  loadBuildInfo();
 });

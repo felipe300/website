@@ -85,8 +85,12 @@ var translations = {
 };
 async function loadTranslations() {
   try {
-    const response = await fetch("/lang.json");
-    translations = await response.json();
+    const response = await fetch("./lang.json");
+    console.log("status:", response.status);
+    console.log("url:", response.url);
+    const text = await response.text();
+    console.log(text);
+    translations = JSON.parse(text);
     const savedLang = localStorage.getItem("prefLang") || "es";
     applyLanguage(savedLang);
     setupLanguageButtons();
@@ -127,6 +131,31 @@ function applyLanguage(lang) {
   localStorage.setItem("prefLang", lang);
 }
 
+// src/modules/buildInfo.ts
+async function loadBuildInfo() {
+  const elements = document.querySelectorAll("[data-system]");
+  let data = {};
+  try {
+    const res = await fetch("./assets/build-info.json");
+    if (!res.ok)
+      throw new Error;
+    data = await res.json();
+  } catch {
+    data = {
+      "last-login": new Date().toUTCString() + " (local dev)"
+    };
+  }
+  elements.forEach((el) => {
+    const key = el.getAttribute("data-system");
+    if (!key)
+      return;
+    const value = data[key];
+    if (value) {
+      el.textContent = value;
+    }
+  });
+}
+
 // src/main.ts
 document.addEventListener("DOMContentLoaded", () => {
   initHackerEffect();
@@ -134,4 +163,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setupClickToCopy('a[href^="mailto:"]', true);
   setupClickToCopy('a[href*="github.com"]');
   loadTranslations();
+  loadBuildInfo();
 });

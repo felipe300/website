@@ -1,6 +1,5 @@
 {
   "common": {
-    "last_login": "Last login: {{LAST_LOGIN}}",
     "prompt_whoami": "felipe@dev:~$ whoami",
     "name": "Felipe Gutiérrez",
     "role": "DevOps Engineer",
