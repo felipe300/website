@@ -54,9 +54,11 @@ const server = Bun.serve({
       pathname.startsWith("/public/") ||
       pathname === "/lang.json"
     ) {
-      const filePath = pathname === "/lang.json" ? "./public/lang.json" : `.${pathname}`;
+      const localPath = `./assets/${pathname.split("/").pop()}`;
+      const distPath = `./dist/assets/${pathname.split("/").pop()}`;
 
-      const file = Bun.file(filePath);
+      const file = (await Bun.file(distPath).exists()) ? Bun.file(distPath) : Bun.file(localPath);
+
       if (!(await file.exists())) {
         return new Response("Not Found", { status: 404 });
       }

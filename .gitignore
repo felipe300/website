@@ -6,6 +6,9 @@ out
 dist
 *.tgz
 
+assets/index.js
+assets/build-info.json
+
 # code coverage
 coverage
 *.lcov
