@@ -8,7 +8,7 @@ export async function loadBuildInfo() {
     const rawData = await res.json();
 
     data = {
-      "last-login": `${rawData.lastDeployment} from github.actions`,
+      "last-login": `${rawData["last-login"]} from github.actions`,
       commit: rawData.commit,
       status: rawData.status,
     };
