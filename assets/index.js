@@ -139,10 +139,18 @@ async function loadBuildInfo() {
     const res = await fetch("./assets/build-info.json");
     if (!res.ok)
       throw new Error;
-    data = await res.json();
-  } catch {
+    const rawData = await res.json();
     data = {
-      "last-login": new Date().toUTCString() + " (local dev)"
+      "last-login": `${rawData.lastDeployment} from github.actions`,
+      commit: rawData.commit,
+      status: rawData.status
+    };
+  } catch {
+    const now = new Date;
+    data = {
+      "last-login": now.toLocaleString() + " (local dev)",
+      commit: "local-branch",
+      status: "running"
     };
   }
   elements.forEach((el) => {
