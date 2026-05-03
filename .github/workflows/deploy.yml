@@ -50,12 +50,20 @@ jobs:
 
       - name: Generate build info
         run: |
-          mkdir -p assets
+          mkdir -p dist/assets
           echo '{
             "lastDeployment": "'$(date -u +"%Y-%m-%d %H:%M UTC")'",
             "commit": "'${{ github.sha }}'",
             "status": "passing"
-          }' > assets/build-info.json
+          }' > dist/assets/build-info.json
+
+      - name: Prepare deploy folder
+        run: |
+          cp index.html dist/
+          if [ -d "public" ]; then
+            cp -r public/* dist/
+          fi
+          ls -R dist/assets
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

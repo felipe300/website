@@ -8,14 +8,8 @@ export async function loadTranslations() {
   try {
     const response = await fetch("./lang.json");
 
-    console.log("status:", response.status);
-    console.log("url:", response.url);
-
     const text = await response.text();
-    console.log(text);
     translations = JSON.parse(text);
-
-    // translations = await response.json();
 
     const savedLang = localStorage.getItem("prefLang") || "es";
     applyLanguage(savedLang);
