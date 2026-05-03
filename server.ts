@@ -49,9 +49,14 @@ const server = Bun.serve({
         },
       });
 
-    if (pathname.startsWith("/assets/")) {
-      const file = Bun.file(`.${pathname}`);
+    if (
+      pathname.startsWith("/assets/") ||
+      pathname.startsWith("/public/") ||
+      pathname === "/lang.json"
+    ) {
+      const filePath = pathname === "/lang.json" ? "./public/lang.json" : `.${pathname}`;
 
+      const file = Bun.file(filePath);
       if (!(await file.exists())) {
         return new Response("Not Found", { status: 404 });
       }
@@ -71,7 +76,7 @@ const server = Bun.serve({
       let data: any = { projects: [], skills: [] };
       if (pathname === "/projects" || pathname === "/skills") {
         try {
-          data = await Bun.file("./assets/data.json").json();
+          data = await Bun.file("/data.json").json();
         } catch (e) {
           return textResponse(`${log("Error: data.json not found or invalid")}\n`);
         }
