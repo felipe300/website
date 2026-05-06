@@ -48,28 +48,39 @@ const server = Bun.serve({
           "Cache-Control": "no-store",
         },
       });
-
     if (
       pathname.startsWith("/assets/") ||
       pathname.startsWith("/public/") ||
-      pathname === "/lang.json"
+      pathname === "/lang.json" ||
+      pathname === "/build-info.json"
     ) {
-      const localPath = `./assets/${pathname.split("/").pop()}`;
-      const distPath = `./dist/assets/${pathname.split("/").pop()}`;
+      let filePath = "";
 
-      const file = (await Bun.file(distPath).exists()) ? Bun.file(distPath) : Bun.file(localPath);
+      if (pathname === "/lang.json") {
+        filePath = "./public/lang.json";
+      } else {
+        filePath = `.${pathname}`;
+      }
 
-      if (!(await file.exists())) {
+      const file = Bun.file(filePath);
+
+      const distPath = `./dist${pathname}`;
+      const distFile = Bun.file(distPath);
+
+      const finalFile = (await file.exists()) ? file : (await distFile.exists()) ? distFile : null;
+
+      if (!finalFile) {
+        console.error(`[404] No encontrado en ${filePath} ni en ${distPath}`);
         return new Response("Not Found", { status: 404 });
       }
 
       const ext = pathname.split(".").pop() || "";
       const contentType = CONTENT_TYPES[ext] || "application/octet-stream";
 
-      return new Response(file, {
+      return new Response(finalFile, {
         headers: {
           "Content-Type": contentType,
-          "Cache-Control": "public, max-age=31536000",
+          "Cache-Control": "no-store",
         },
       });
     }
