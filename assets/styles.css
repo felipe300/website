@@ -236,6 +236,37 @@ h2 {
   margin: 1rem 0 1.2rem;
 }
 
+.rainbow {
+  background-image: repeating-linear-gradient(
+    to top right,
+    red 0%,
+    yellow 8.3%,
+    lime 16.6%,
+    cyan 24.9%,
+    blue 33.2%,
+    magenta 41.5%,
+    red 50%
+  );
+
+  background-size: 200% 200%;
+  background-position: 0% 100%;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  animation: loop 3s linear infinite;
+}
+
+@keyframes loop {
+  from {
+    background-position: 0% 100%;
+  }
+  to {
+    background-position: 100% 0%;
+  }
+}
+
 article {
   border-left: 2px solid var(--main-color);
   padding: 0.5rem 0 0.5rem 1.5rem;
