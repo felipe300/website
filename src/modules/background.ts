@@ -25,13 +25,26 @@ export function initBackground() {
   };
 
   generateText();
-  setInterval(generateText, 70);
+  // setInterval(generateText, 500);
 
   window.addEventListener("resize", generateText);
 
-  window.addEventListener("mousemove", (e) => {
-    document.documentElement.style.setProperty("--mouse-x", `${e.clientX}px`);
+  let mouseX = 0;
+  let mouseY = 0;
+  let ticking = false;
 
-    document.documentElement.style.setProperty("--mouse-y", `${e.clientY}px`);
+  window.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        document.documentElement.style.setProperty("--mouse-x", `${mouseX}px`);
+        document.documentElement.style.setProperty("--mouse-y", `${mouseY}px`);
+        ticking = false;
+      });
+
+      ticking = true;
+    }
   });
 }
